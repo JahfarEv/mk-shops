@@ -1,46 +1,3 @@
-// import { useNavigate } from "react-router-dom";
-
-// export default function ShopLogin() {
-//   const navigate = useNavigate();
-
-//   return (
-//     <div className="min-h-screen bg-[var(--color-dark)] flex items-center justify-center px-4 text-white">
-
-//       <div className="w-full max-w-sm bg-[var(--color-panel)] p-6 rounded-2xl border border-white/10">
-
-//         <h1 className="text-3xl text-center text-[var(--color-gold)] font-serif mb-2">
-//           MK FASHION
-//         </h1>
-//         <p className="text-center text-gray-400 mb-6">Shop Login</p>
-
-//         <input
-//           placeholder="Username"
-//           className="w-full mb-4 px-4 py-3 bg-transparent border border-white/20 rounded-lg focus:border-[var(--color-gold)] outline-none"
-//         />
-
-//         <input
-//           type="password"
-//           placeholder="Password"
-//           className="w-full mb-6 px-4 py-3 bg-transparent border border-white/20 rounded-lg focus:border-[var(--color-gold)] outline-none"
-//         />
-
-//         <button
-//           onClick={() => navigate("/dashboard")}
-//           className="w-full bg-[var(--color-gold)] text-black py-3 rounded-lg font-semibold"
-//         >
-//           LOGIN
-//         </button>
-
-//         <p className="text-center text-sm mt-4 text-gray-400">
-//           Forgot Password?
-//         </p>
-//       </div>
-
-//     </div>
-//   );
-// }
-
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -56,90 +13,85 @@ export default function ShopLogin() {
   const [loading, setLoading] = useState(false);
 
   /* ================= SHOP LOGIN ================= */
- const handleLogin = async () => {
-  if (!email || !password) {
-    alert("Please enter email and password");
-    return;
-  }
-
-  try {
-    setLoading(true);
-
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      email.trim(),
-      password
-    );
-
-    const uid = userCredential.user.uid;
-
-    const snapshot = await get(ref(rtdb, "shops/" + uid));
-
-    if (!snapshot.exists()) {
-      alert("This account is not registered as a shop");
+  const handleLogin = async () => {
+    if (!email || !password) {
+      alert("Please enter email and password");
       return;
     }
 
-    navigate("/dashboard");
-  } catch (error) {
-    console.error(error.code);
+    try {
+      setLoading(true);
 
-    if (error.code === "auth/user-not-found") {
-      alert("Shop account not found");
-    } else if (error.code === "auth/wrong-password") {
-      alert("Incorrect password");
-    } else if (error.code === "auth/invalid-email") {
-      alert("Invalid email");
-    } else {
-      alert(error.message);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email.trim(),
+        password,
+      );
+
+      const uid = userCredential.user.uid;
+
+      const snapshot = await get(ref(rtdb, "shops/" + uid));
+
+      if (!snapshot.exists()) {
+        alert("This account is not registered as a shop");
+        return;
+      }
+
+      navigate("/dashboard");
+    } catch (error) {
+      console.error(error.code);
+
+      if (error.code === "auth/user-not-found") {
+        alert("Shop account not found");
+      } else if (error.code === "auth/wrong-password") {
+        alert("Incorrect password");
+      } else if (error.code === "auth/invalid-email") {
+        alert("Invalid email");
+      } else {
+        alert(error.message);
+      }
+    } finally {
+      setLoading(false);
     }
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   return (
-
     <AppLayout>
-    <div className="min-h-screen bg-[var(--color-dark)] flex items-center justify-center px-4 text-white">
+      <div className="min-h-screen bg-[var(--color-dark)] flex items-center justify-center px-4 text-white">
+        <div className="w-full max-w-sm bg-[var(--color-panel)] p-6 rounded-2xl border border-white/10">
+          <h1 className="text-3xl text-center text-[var(--color-gold)] font-serif mb-2">
+            MK MENS WEAR
+          </h1>
+          <p className="text-center text-gray-400 mb-6">Shop Login</p>
 
-      <div className="w-full max-w-sm bg-[var(--color-panel)] p-6 rounded-2xl border border-white/10">
+          <input
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full mb-4 px-4 py-3 bg-transparent border border-white/20 rounded-lg focus:border-[var(--color-gold)] outline-none"
+          />
 
-        <h1 className="text-3xl text-center text-[var(--color-gold)] font-serif mb-2">
-          MK MENS WEAR
-        </h1>
-        <p className="text-center text-gray-400 mb-6">Shop Login</p>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full mb-6 px-4 py-3 bg-transparent border border-white/20 rounded-lg focus:border-[var(--color-gold)] outline-none"
+          />
 
-        <input
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full mb-4 px-4 py-3 bg-transparent border border-white/20 rounded-lg focus:border-[var(--color-gold)] outline-none"
-        />
+          <button
+            disabled={loading}
+            onClick={handleLogin}
+            className="w-full bg-[var(--color-gold)] text-black py-3 rounded-lg font-semibold disabled:opacity-50"
+          >
+            {loading ? "Logging in..." : "LOGIN"}
+          </button>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full mb-6 px-4 py-3 bg-transparent border border-white/20 rounded-lg focus:border-[var(--color-gold)] outline-none"
-        />
-
-        <button
-          disabled={loading}
-          onClick={handleLogin}
-          className="w-full bg-[var(--color-gold)] text-black py-3 rounded-lg font-semibold disabled:opacity-50"
-        >
-          {loading ? "Logging in..." : "LOGIN"}
-        </button>
-
-        {/* <p className="text-center text-sm mt-4 text-gray-400">
+          {/* <p className="text-center text-sm mt-4 text-gray-400">
           Forgot Password?
         </p> */}
+        </div>
       </div>
-
-    </div>
     </AppLayout>
   );
 }

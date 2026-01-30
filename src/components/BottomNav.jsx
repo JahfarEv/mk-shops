@@ -15,7 +15,7 @@ export default function BottomNav() {
         📊<br />Reports
       </button>
       <button onClick={() => navigate("/today")} className={tab("/today")}>
-        💰<br />Today
+        💰<br />New
       </button>
     </div>
   );
