@@ -84,7 +84,7 @@ export default function ReportTable({ onMonthlyBalance }) {
   if (loading) {
     return (
       <div className="text-center text-gray-400 py-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-[var(--color-gold)] mx-auto mb-2"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-[var(--color-gold)] mx-auto mb-2"></div>
         Loading reports...
       </div>
     );

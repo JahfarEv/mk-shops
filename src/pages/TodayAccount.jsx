@@ -59,6 +59,7 @@ export default function TodayAccount() {
 
   return (
     <AppLayout>
+    
       <div className="min-h-screen bg-[var(--color-dark)] text-white flex flex-col">
         {/* HEADER */}
         <div

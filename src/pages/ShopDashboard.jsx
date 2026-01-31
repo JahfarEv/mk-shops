@@ -51,7 +51,7 @@ export default function ShopDashboard() {
         {/* Top Header with Date and Settings Icon */}
         <div className="flex justify-between items-center mb-6">
           {/* Current Date */}
-          <div className="text-sm text-gray-300 bg-[var(--color-dark-light)] px-3 py-2 rounded-lg">
+          <div className="text-sm text-amber-200 bg-[var(--color-dark-light)]  py-2 rounded-lg">
             {currentDate || "Loading..."}
           </div>
 
@@ -117,8 +117,8 @@ export default function ShopDashboard() {
         {/* Daily Reports Header */}
         <div className="mb-2 flex justify-between text-sm text-gray-300">
           <span>Daily Reports</span>
-          <span className="text-[var(--color-gold)]">
-            MONTHLY BALANCE ₹{monthlyBalance}
+          <span className="text-gray-300]">
+            MONTHLY BALANCE ₹ {monthlyBalance}
           </span>
         </div>
 
