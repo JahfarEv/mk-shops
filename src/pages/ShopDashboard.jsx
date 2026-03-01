@@ -47,7 +47,7 @@ export default function ShopDashboard() {
 
   return (
     <AppLayout>
-      <div className="min-h-screen bg-[var(--color-dark)] text-white p-4">
+      <div className="min-h-screen bg-[var(--color-dark)] text-white px-4 py-6">
         {/* Top Header with Date and Settings Icon */}
         <div className="flex justify-between items-center mb-6">
           {/* Current Date */}
